@@ -1,12 +1,12 @@
-const express             = require("express");
-const User                = require("../models/User");
-const Course              = require("../models/Course");
-const bcrypt              = require('bcrypt');
-const bcryptSalt          = 10;
-const path                = require('path');
-const passport            = require("passport");
-const siteController      = express.Router();
-const debug               = require('debug')('ibi-ironhack:'+ path.basename(__filename));
+const express = require("express");
+const User = require("../models/User");
+const Course = require("../models/Course");
+const bcrypt = require('bcrypt');
+const bcryptSalt = 10;
+const path = require('path');
+const passport = require("passport");
+const siteController = express.Router();
+const debug = require('debug')('ibi-ironhack:' + path.basename(__filename));
 //const checkRoles          = require("../middlewares/checkRoles");
 //const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
 

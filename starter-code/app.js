@@ -1,18 +1,18 @@
-const express        = require('express');
+const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const path           = require('path');
-const favicon        = require('serve-favicon');
-const logger         = require('morgan');
-const cookieParser   = require('cookie-parser');
-const bodyParser     = require('body-parser');
-const flash          = require('flash');
-const session        = require('express-session');
-const User           = require('./models/User');
-const passport       = require('passport');
-const LocalStrategy  = require('passport-local').Strategy;
-const bcrypt         = require('bcrypt');
-const debug          = require('debug')('ibi-ironhack:'+ path.basename(__filename));
-const app            = express();
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const flash = require('flash');
+const session = require('express-session');
+const User = require('./models/User');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const debug = require('debug')('ibi-ironhack:' + path.basename(__filename));
+const app = express();
 
 // Controllers
 const siteController = require("./routes/siteController");
@@ -20,8 +20,8 @@ const usersController = require("./routes/users");
 const coursesController = require("./routes/courses");
 
 // Mongoose configuration
-const mongoose       = require("mongoose");
-const databaseURL    = "mongodb://localhost/ibi-ironhack";
+const mongoose = require("mongoose");
+const databaseURL = "mongodb://localhost/ibi-ironhack";
 mongoose.connect(databaseURL, {useMongoClient: true}, () => debug(`Connected to db: ${databaseURL}`));
 
 // view engine setup

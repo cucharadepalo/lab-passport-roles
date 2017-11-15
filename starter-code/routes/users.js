@@ -1,20 +1,21 @@
-const express             = require("express");
-const User                = require("../models/User");
-const bcrypt              = require('bcrypt');
-const bcryptSalt          = 10;
-const path                = require('path');
-const passport            = require("passport");
-const usersController     = express.Router();
+const express = require("express");
+const User = require("../models/User");
+const bcrypt = require('bcrypt');
+const bcryptSalt = 10;
+const path = require('path');
+const passport = require("passport");
+const usersController = express.Router();
 
 
 usersController.get("/employees", checkRoles('Boss'), (req, res) => {
   User.find({$or: [ {role: 'Developer'}, {role: 'TA'} ]})
-       .then((data) => {
-         res.render("employees/index", {data: data, user: req.user});
-       }, (err) => {
-         next(err);
-         //res.render("error", {error: err});
-       });
+    .then((data) => {
+      res.render("employees/index", {data: data, user: req.user});
+    })
+    .catch((err) => {
+      next(err);
+      //res.render("error", {error: err});
+    });
 });
 
 usersController.post("/employees/create", checkRoles('Boss'), (req, res) => {
@@ -29,21 +30,23 @@ usersController.post("/employees/create", checkRoles('Boss'), (req, res) => {
   };
   const newEmployee = new User(employeeInfo);
   newEmployee.save()
-             .then(() => {
-               return res.redirect("/employees");
-             }, (err) => {
-               next(err);
-             });
-});
+    .then(() => {
+      return res.redirect("/employees");
+    })
+    .catch((err) => {
+      next(err);
+    });
+  });
 
 usersController.post("/employees/:id/delete", checkRoles('Boss'), (req, res) => {
   const employeeId = req.params.id;
   User.findByIdAndRemove(employeeId)
-      .then(() => {
-        return res.redirect("/employees");
-      }, (err) => {
-        next(err);
-      });
+    .then(() => {
+      return res.redirect("/employees");
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 usersController.get("/users", ensureAuthenticated, (req, res) => {
@@ -55,31 +58,34 @@ usersController.get("/users", ensureAuthenticated, (req, res) => {
     queryRole = {};
   }
   User.find(queryRole)
-       .then((data) => {
-         res.render("users/index", {data: data, user: req.user});
-       }, (err) => {
-         next(err);
-       });
+    .then((data) => {
+      res.render("users/index", {data: data, user: req.user});
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 usersController.get("/users/:id", ensureAuthenticated, (req, res) => {
   const id = req.params.id;
   User.findById(id)
-       .then((data) => {
-         res.render("users/profile", {data: data, user: req.user});
-       }, (err) => {
-         next(err);
-       });
+    .then((data) => {
+      res.render("users/profile", {data: data, user: req.user});
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 usersController.get("/users/edit/:id", ensureAuthenticated, (req, res) => {
   const id = req.params.id;
   User.findById(id)
-       .then((data) => {
-         res.render("users/edit", {data: data, user: req.user});
-       }, (err) => {
-         next(err);
-       });
+    .then((data) => {
+      res.render("users/edit", {data: data, user: req.user});
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 usersController.post("/users/edit/:id", ensureAuthenticated, (req, res) => {
@@ -92,18 +98,21 @@ usersController.post("/users/edit/:id", ensureAuthenticated, (req, res) => {
     familyName: req.body.familyName,
     password: bcrypt.hashSync(pass, salt)
   };
-  User.findByIdAndUpdate(id, { $set:
+  User.findByIdAndUpdate(id,
+    { $set:
       {
-      username: userInfo.username,
-      name: userInfo.name,
-      familyName : userInfo.familyName,
-      password: userInfo.password
-    }}, { new: true })
-       .then((data) => {
-         res.render("users/profile", {data: data, user: req.user});
-       }, (err) => {
-         next(err);
-       });
+        username: userInfo.username,
+        name: userInfo.name,
+        familyName : userInfo.familyName,
+        password: userInfo.password
+      }
+    }, { new: true })
+    .then((data) => {
+      res.render("users/profile", {data: data, user: req.user});
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 function checkRoles(role) {
