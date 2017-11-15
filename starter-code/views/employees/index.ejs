@@ -20,7 +20,7 @@
           <td><%= employee.role %></td>
           <td>******</td>
           <td>
-            <form id="employeeDelete" action="/employees/<%= employee._id %>/delete" method="post">
+            <form id="employeeDelete" action="/employees/delete/<%= employee._id %>" method="post">
               <button type="submit" class="button secondary">Delete</button>
             </form>
           </td>

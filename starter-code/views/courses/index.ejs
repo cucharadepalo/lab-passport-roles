@@ -1,0 +1,53 @@
+<h2>Available courses</h2>
+<div class="grid-x grid-margin-x">
+  <% data.forEach((course) => { %>
+    <div class="cell large-2">
+      <div class="card">
+        <div class="card-divider">
+          <h4><%= course.name %></h4>
+        </div>
+        <div class="card-section">
+          <p>From: <em><%= course.startingDate.toLocaleDateString("es-ES") %></em> to: <em><%= course.endDate.toLocaleDateString("es-ES") %></em></p>
+          <p>Level: <strong><%= course.level %></strong></p>
+        </div>
+        <% if (user.role == "TA") { %>
+          <div class="card-section">
+            <div class="small button-group">
+              <a href="/courses/edit/<%= course.id %>" class="button">Edit course</a>
+              <a href="/courses/delete/<%= course.id %>" class="secondary button">Delete course</a>
+            </div>
+          </div>
+          <% } %>
+      </div>
+    </div>
+    <% }) %>
+      <% if (user.role == "TA") { %>
+        <div class="cell large-2">
+          <div class="card">
+            <form action="/courses/create" method="post">
+              <div class="card-divider">
+                <h4>New Course</h4>
+              </div>
+              <div class="card-section">
+                <input type="text" name="name" placeholder="Course name">
+                <label for="startingDate">Starting Date</label>
+                <input type="date" name="startingDate">
+                <label for="endDate">End date</label>
+                <input type="date" name="endDate">
+                <label for="level">Level</label>
+                <select name="level">
+          <option value="Advanced" selected>Advanced</option>
+          <option value="Beginner">Beginner</option>
+        </select>
+                <fieldset>
+                  <legend>Available</legend>
+                  <input type="radio" name="available" value="true"><label for="availableTrue">Yes</label>
+                  <input type="radio" name="available" value="false"><label for="availableFalse">No</label>
+                </fieldset>
+                <button class="button" type="submit">Create course</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <% } %>
+</div>

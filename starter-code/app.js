@@ -5,6 +5,7 @@ const favicon        = require('serve-favicon');
 const logger         = require('morgan');
 const cookieParser   = require('cookie-parser');
 const bodyParser     = require('body-parser');
+const flash          = require('flash');
 const session        = require('express-session');
 const User           = require('./models/User');
 const passport       = require('passport');
@@ -15,6 +16,8 @@ const app            = express();
 
 // Controllers
 const siteController = require("./routes/siteController");
+const usersController = require("./routes/users");
+const coursesController = require("./routes/courses");
 
 // Mongoose configuration
 const mongoose       = require("mongoose");
@@ -37,6 +40,7 @@ app.use(session ({
   resave: true,
   saveUninitialized: true
 }));
+app.use(flash());
 
 // Passport functions and strategies
 // Functions
@@ -75,6 +79,8 @@ app.use(passport.session());
 
 // Routes
 app.use("/", siteController);
+app.use("/", usersController);
+app.use("/", coursesController);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

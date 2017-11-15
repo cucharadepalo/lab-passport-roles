@@ -1,0 +1,12 @@
+<% if (typeof(user) !== "undefined"){ %>
+<footer>
+  <hr>
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <div class="cell large-6">
+        <p><small>Logged as <strong><%= user.username %></strong> | Role: <strong><%= user.role %></strong></small></p>
+      </div>
+    </div>
+  </div>
+</footer>
+<% } %>
