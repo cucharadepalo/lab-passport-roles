@@ -36,7 +36,7 @@ usersController.post("/employees/create", checkRoles('Boss'), (req, res) => {
     .catch((err) => {
       next(err);
     });
-  });
+});
 
 usersController.post("/employees/:id/delete", checkRoles('Boss'), (req, res) => {
   const employeeId = req.params.id;
